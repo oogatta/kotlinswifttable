@@ -1,0 +1,66 @@
+/*
+Date: 24 Fev 2015
+Author: Pedro Oliveira <kanytu@gmail . com>
+*/
+
+.kotlin .hljs {
+  color: #a9b7c6;
+  background: #282b2e;
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+.kotlin .hljs-number,
+.kotlin .hljs-literal,
+.kotlin .hljs-symbol,
+.kotlin .hljs-bullet {
+  color: #6897BB;
+}
+
+.kotlin .hljs-keyword,
+.kotlin .hljs-selector-tag,
+.kotlin .hljs-deletion {
+  color: #cc7832;
+}
+
+.kotlin .hljs-variable,
+.kotlin .hljs-template-variable,
+.kotlin .hljs-link {
+  color: #629755;
+}
+
+.kotlin .hljs-comment,
+.kotlin .hljs-quote {
+  color: #808080;
+}
+
+.kotlin .hljs-meta {
+  color: #bbb529;
+}
+
+.kotlin .hljs-string,
+.kotlin .hljs-attribute,
+.kotlin .hljs-addition {
+  color: #6A8759;
+}
+
+.kotlin .hljs-section,
+.kotlin .hljs-title,
+.kotlin .hljs-type {
+  color: #ffc66d;
+}
+
+.kotlin .hljs-name,
+.kotlin .hljs-selector-id,
+.kotlin .hljs-selector-class {
+  color: #e8bf6a;
+}
+
+.kotlin .hljs-emphasis {
+  font-style: italic;
+}
+
+.kotlin .hljs-strong {
+  font-weight: bold;
+}

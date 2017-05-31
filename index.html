@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Fira+Mono:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles/androidstudio.css">
+  <link rel="stylesheet" href="styles/xcode.css">
+  <script src="highlight.pack.js"></script>
+  <script>
+  hljs.initHighlightingOnLoad();
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    code {
+      font-family: 'Fira Mono', monospace;
+      font-size:15px;
+    }
+    .table {
+      width: 100%;
+      max-width: 1860px;
+      display: table;
+    }
+    .first pre {
+      font-size:18px;
+    }
+    .row {
+      display: table-row;
+    }
+    .row .header {
+      box-sizing: content-box;
+      display: table-cell;
+      width: 10%;
+      vertical-align: middle;
+      text-align: right;
+      padding-right: 15px;
+    }
+    .row pre {
+      box-sizing: content-box;
+      padding: 15px;
+      display: table-cell;
+      width: 45%;
+    }
+  </style>
+</head>
+<body>
+  <div class="table">
+    <div class="row first"><div class="header"></div><pre>Kotlin</pre><pre>Swift</pre></div>
+
+
+    <div class="row">
+      <div class="header">JSのオブジェクトぽい<br>型の混じったやつ</div>
+      <pre class="kotlin"><code class="kotlin">
+val tuple = object {
+    val town = "Ebisu"
+    val weather = "Fine"
+    val sumitai = 1
+}
+
+println(tuple.town)    // Ebisu
+println(tuple.weather) // Fine
+println(tuple.sumitai) // 1
+      </code></pre>
+      <pre class="swift"><code class="swift">
+let tuple = (
+    town: "Ebisu",
+    weather: "Fine",
+    sumitai: 1
+)
+
+tuple.town    // Ebisu
+tuple.weather // Fine
+tuple.sumitai // 1
+      </code></pre>
+    </div>
+
+
+    <div class="row">
+      <div class="header">引数の最後に<br>コールバックをとる<br>関数の呼び出し</div>
+      <pre class="kotlin"><code class="kotlin">
+fun someAsyncTask(message:String, callback:(String) -> String) {
+    callback(message)
+}
+
+someAsyncTask("yes") { message ->
+    println(message) // yes
+    message
+}
+      </code></pre>
+      <pre class="swift"><code class="swift">
+func someAsyncTask(_ message:String, callback:(String) -> String) {
+    callback(message)
+}
+
+someAsyncTask("yes") { message in
+    print(message) // yes
+    return message
+}
+      </code></pre>
+    </div>
+
+
+
+  </div>
+</body>
+</html>

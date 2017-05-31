@@ -18,7 +18,7 @@
     }
     .table {
       width: 100%;
-      max-width: 1860px;
+      max-width: 1900px;
       display: table;
     }
     .first pre {
@@ -31,8 +31,9 @@
       box-sizing: content-box;
       display: table-cell;
       width: 10%;
-      vertical-align: middle;
+      vertical-align: top;
       text-align: right;
+      padding-top: 15px;
       padding-right: 15px;
     }
     .row pre {
@@ -98,6 +99,102 @@ someAsyncTask("yes") { message in
 }
       </code></pre>
     </div>
+
+
+        <div class="row">
+          <div class="header">Optionalにしないための<br>インスタンスプロパティ<br>の遅延代入</div>
+          <pre class="kotlin"><code class="kotlin">
+class SomeClass {
+    init {
+        println("SomeClass is initialized.")
+    }
+}
+
+class LateInitClass {
+    // kotlin の lateinit は ? を外せるというだけ
+    // 基本 DI とか、 DI 風にあとから注入されるプロパティ用で、代入は自分でやる
+    lateinit var someClass: SomeClass
+
+    init {
+        println("LateInitClass is initialized.")
+    }
+
+    fun say(message: String) {
+        println(message)
+    }
+}
+
+class AnyClass {
+    init {
+        println("AnyClass is initialized.")
+    }
+}
+
+class LazyClass {
+    // Kotlin の lazy は val のみ（ Swift の逆）
+    // 最初に anyClass に対して get() が走ったときに lambda が評価されて返される。
+    // その後の get() にはキャッシュされた値が返される。
+    //
+    // Swift の lazy と書式は違うが同じ感覚で使える。
+    // lambda 内でインスタンスプロパティにアクセスできる分、 Kotlin の lazy の方が使いやすい。
+    val anyClass: AnyClass by lazy {
+        println(age)
+        AnyClass()
+    }
+
+    val age = 32
+
+    init {
+        println("LazyClass is initialized.")
+    }
+
+    fun say(message: String) {
+        println(message)
+    }
+}
+
+
+
+fun main(args: Array<String>) {
+    val lateInitClass = LateInitClass()   // LazyClass is initialized.
+    lateInitClass.say("hi")               // hi
+    lateInitClass.someClass = SomeClass() // SomeClass is initialized.
+
+    val lazyClass = LazyClass()           // LazyClass is initialized.
+    lazyClass.say("hi")                   // hi
+                                          // 32
+    val anyClass = lazyClass.anyClass     // AnyClass is initialized.
+}
+          </code></pre>
+          <pre class="swift"><code class="swift">
+class SomeClass {
+    init() {
+        print("SomeClass is initialized.")
+    }
+}
+
+class LazyClass {
+    // Swift の lazy は var のみ（ Kotlin の逆）
+    // Swift の lazy は、インスタンスプロパティの代入操作を、最初にアクセスがあるまで遅延してくれる
+    //
+    // Kotlin の lazy と書式は違うが同じ感覚で使える
+    // Swift の lazy では Computed Property を使えないので、自由度は Kotlin に劣る
+    lazy var someClass = SomeClass()
+
+    init() {
+        print("LazyClass is initialized.")
+    }
+
+    func say(_ message: String) {
+        print(message)
+    }
+}
+
+let lazyClass = LazyClass()         // LazyClass is initialized.
+lazyClass.say("hi")                 // hi
+let someClass = lazyClass.someClass // SomeClass is initialized.
+          </code></pre>
+        </div>
 
 
 

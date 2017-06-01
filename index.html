@@ -42,6 +42,9 @@
       display: table-cell;
       width: 45%;
     }
+    .row pre code {
+      padding: 15px!important;
+    }
   </style>
 </head>
 <body>
@@ -77,26 +80,65 @@ tuple.sumitai // 1
 
 
     <div class="row">
-      <div class="header">引数の最後に<br>コールバックをとる<br>関数の呼び出し</div>
+      <div class="header">ラムダ<br>クロージャ</div>
       <pre class="kotlin"><code class="kotlin">
-fun someAsyncTask(message:String, callback:(String) -> String) {
-    callback(message)
+// Kotlin はラムダ（ lambda ）
+
+fun sampleA(callback:() -> String) {
+    callback()
 }
 
-someAsyncTask("yes") { message ->
-    println(message) // yes
-    message
+fun sampleB(callback:(Int, String) -> String) {
+    callback(2, "test")
+}
+
+fun sampleC(message:String, callback:(Int, String) -> String) {
+    callback(2, message)
+}
+
+fun main(args: Array<String>) {
+    // 引数がラムダだけなら () を省略できる
+    sampleA { "test" }
+
+    // 引数を使わないなら _ で興味ないことを示せる
+    sampleB { _, string -> string }
+
+    // return は使えないので、どうしても使いたければ匿名関数（ anonymous function ）を使う
+    // 匿名関数の場合は () を省略できない
+    sampleB(fun (_, string): String { return string })
+
+    // 引数の最後がラムダの場合 () の外に書ける
+    sampleC("hi") { _, string -> string }
+
 }
       </code></pre>
       <pre class="swift"><code class="swift">
-func someAsyncTask(_ message:String, callback:(String) -> String) {
-    callback(message)
+// Swift はクロージャ（ closure ）
+
+func sampleA(callback:() -> String) {
+    callback()
 }
 
-someAsyncTask("yes") { message in
-    print(message) // yes
-    return message
+func sampleB(callback:(Int, String) -> String) {
+    callback(2, "test")
 }
+
+func sampleC(_ message:String, _ callback:(Int, String) -> String) {
+    callback(2, message)
+}
+
+// 引数がクロージャだけなら、引数ラベルが _ でなくても () と引数名を省略できる
+sampleA { "test" }
+
+// 引数を使わないなら _ で興味ないことを示せる
+sampleB { _, string in string }
+
+// Swift のクロージャは return 使おうと思えば普通に使える
+sampleB { _, string in return string }
+
+// 引数の最後がクロージャの場合 () の外に書ける
+// ただし、引数ラベルを _ にする必要がある。
+sampleC("hi") { _, string in string }
       </code></pre>
     </div>
 
